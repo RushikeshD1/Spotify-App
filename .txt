@@ -1,0 +1,5 @@
+while deploying using AWS -->> dev dependences will be needed
+nodemon -->> which will restart the server
+concurrently-->> it help use to run two things concurrently
+we need to generate -->> ts-config file
+By default express can't read json file - we need to use middleware for that
