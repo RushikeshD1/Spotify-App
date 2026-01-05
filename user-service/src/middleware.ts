@@ -16,7 +16,7 @@ export const isAuth = async (
 
     if (!token) {
       res.status(403).json({
-        message: "Please Login",
+        message: "Please Login !",
       });
       return;
     }
@@ -50,7 +50,7 @@ export const isAuth = async (
     next();
   } catch (error) {
     res.status(403).json({
-      message: "Please Login",
+      message: "Please Login !",
     });
   }
 };
