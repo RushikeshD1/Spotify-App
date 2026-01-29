@@ -66,6 +66,7 @@ export const loginUser = TryCatch(async(req, res) => {
             expiresIn: "7d"
         }
     )
+    
 
     res.status(200).json({
         message: "User login",

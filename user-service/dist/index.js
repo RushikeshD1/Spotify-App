@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRoutes from "./route.js";
+import cors from "cors";
 const connectDb = async () => {
     try {
         mongoose.connect(process.env.MONGO_URI, {
@@ -15,6 +16,7 @@ const connectDb = async () => {
 };
 dotenv.config();
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use("/api/v1", userRoutes);
 app.get("/", (req, res) => res.send("Server is working"));

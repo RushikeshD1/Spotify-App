@@ -3,13 +3,28 @@ import dotenv from "dotenv";
 import { sql } from "./config/db.js";
 import adminRoutes from "./route.js";
 import cloudinary from "cloudinary";
+import redis from "redis";
+import cors from "cors";
 dotenv.config();
+export const redisClient = redis.createClient({
+    password: process.env.Redis_Password,
+    socket: {
+        host: "redis-12950.c305.ap-south-1-1.ec2.cloud.redislabs.com",
+        port: 12950
+    }
+});
+redisClient.connect()
+    .then(() => {
+    console.log("Connected to redis");
+})
+    .catch(console.error);
 cloudinary.v2.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_API_KEY,
     api_secret: process.env.CLOUD_API_SECERT
 });
 const app = express();
+app.use(cors());
 app.use(express.json());
 async function initDB() {
     try {

@@ -2,8 +2,11 @@ import express from "express"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import userRoutes from "./route.js"
+import cors from "cors"
+
 
 const connectDb = async() => {
+    
     try {
         mongoose.connect(process.env.MONGO_URI as string, {
             dbName: "spotify"
@@ -18,6 +21,9 @@ const connectDb = async() => {
 
 dotenv.config()
 const app = express()
+
+app.use(cors());
+
 
 app.use(express.json())
 
