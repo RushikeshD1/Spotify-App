@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import Navbar from "./Navbar"
-import Sidebar from "./sidebar"
+import Sidebar from "./Sidebar"
 import Player from "./Player"
 
 interface LayoutProps{

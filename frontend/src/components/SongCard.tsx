@@ -1,6 +1,6 @@
 import React from "react";
 import { FaBookmark, FaPlay } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+
 
 interface SongCardProps {
   image: string;
