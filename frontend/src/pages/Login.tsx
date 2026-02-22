@@ -1,0 +1,45 @@
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useUserData } from "../context/userContext"
+
+
+const Login = () => {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const navigate = useNavigate();
+
+    const {loginUser, btnLoading} = useUserData();
+
+    async function submitHandler(e:any){
+        e.preventDefault()
+
+        loginUser(email, password, navigate)
+    }
+    
+  return (
+    <div className="flex items-center justify-center h-screen max-h-screen">
+        <div className="bg-black text-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-3xl font-semibold text-center mb-8">
+                Login To SoundNode
+            </h2>
+            <form className="mt-8" onSubmit={submitHandler}>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium mb-1">Email or username</label>
+                    <input type="email" placeholder="Email or username" value={email} onChange={(e) => setEmail(e.target.value)} className="auth-input" required/>
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-sm font-medium mb-1">Password</label>
+                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="auth-input" required/>
+                </div>
+
+                <button disabled={btnLoading} className="auth-btn">{btnLoading ? "Loading...":"Login"}</button>
+            </form>
+        </div>
+    </div>
+  )
+}
+
+export default Login
