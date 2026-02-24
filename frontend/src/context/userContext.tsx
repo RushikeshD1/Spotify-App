@@ -6,7 +6,7 @@ import React, {
   useState,
   type ReactNode,
 } from "react";
-import toast, {Toaster} from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const server = "http://localhost:5000";
 
@@ -24,10 +24,18 @@ interface UserContextType {
   loading: boolean;
   btnLoading: boolean;
   loginUser: (
-    email:string,
-    password:string,
-    navigate: (path:string) => void
+    email: string,
+    password: string,
+    navigate: (path: string) => void,
   ) => Promise<void>;
+  registerUser: (
+    name: string,
+    email: string,
+    password: string,
+    navigate: (path: string) => void,
+  ) => Promise<void>;
+  logoutUser: () => Promise<void>;
+  addToPlayList: (id: string) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -42,7 +50,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
 
-
   async function loginUser(
     email: string,
     password: string,
@@ -51,21 +58,56 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setBtnLoading(true);
 
     try {
-        const {data} = await axios.post(`${server}/api/v1/user/login`, {
-            email,
-            password
-        })
+      const { data } = await axios.post(`${server}/api/v1/user/login`, {
+        email,
+        password,
+      });
 
-        toast.success(data.message);
-        localStorage.setItem("token", data.token);
-        setUser(data.user)
-        setIsAuth(true)
-        setBtnLoading(false)
-        navigate("/")
-    } catch (error:any) {
-        toast.error(error.response?.data?.message || "An error occured")
-        setBtnLoading(false)
+      toast.success(data.message);
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
+      setIsAuth(true);
+      setBtnLoading(false);
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "An error occured");
+      setBtnLoading(false);
     }
+  }
+
+  async function registerUser(
+    name: string,
+    email: string,
+    password: string,
+    navigate: (path: string) => void,
+  ) {
+    setBtnLoading(true);
+
+    try {
+      const { data } = await axios.post(`${server}/api/v1/user/register`, {
+        name,
+        email,
+        password,
+      });
+
+      toast.success(data.message);
+      localStorage.setItem("token", data.token);
+      setUser(data.user);
+      setIsAuth(true);
+      setBtnLoading(false);
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "An error occured");
+      setBtnLoading(false);
+    }
+  }
+
+  async function logoutUser() {
+    localStorage.clear();
+    setUser(null);
+    setIsAuth(false);
+
+    toast.success("User Logged out");
   }
 
   async function fetchUser() {
@@ -85,12 +127,42 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   }
 
+  async function addToPlayList(id: string) {
+    try {
+      const { data } = await axios.post(
+        `${server}/api/v1/song/${id}`,
+        {},
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        },
+      );
+
+      toast.success(data.message);
+      fetchUser();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "An Error Occured");
+    }
+  }
+
   useEffect(() => {
     fetchUser();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, isAuth, loading, btnLoading, loginUser }}>
+    <UserContext.Provider
+      value={{
+        user,
+        isAuth,
+        loading,
+        btnLoading,
+        loginUser,
+        registerUser,
+        logoutUser,
+        addToPlayList,
+      }}
+    >
       {children}
       <Toaster />
     </UserContext.Provider>

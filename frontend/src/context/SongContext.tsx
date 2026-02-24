@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import Album from "../pages/Album";
 
 const server = "http://localhost:8000";
 
@@ -39,6 +40,11 @@ interface SongContextType {
   song: Song | null;
   nextSong: () => void;
   prevSong: () => void;
+  albumSong: Song[];
+  albumData: Album | null;
+  fetchAlbumSongs : (
+    id: string
+  ) => Promise<void>
 }
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
@@ -120,6 +126,24 @@ export const SongProvider: React.FC<SongProviderProps> = ({ children }) => {
     // }
   }, [index, songs])
 
+  const [albumSong, setAlbumSong] = useState<Song[]>([]);
+  const [albumData, setAlbumData] = useState<Album | null>(null);
+
+  const fetchAlbumSongs = useCallback(async (id: string) => {
+    setLoading(true);
+
+    try {
+      const {data} = await axios.get<{songs: Song[]; album: Album}>(`${server}/api/v1/album/${id}`);
+
+      setAlbumData(data.album)
+      setAlbumSong(data.songs)
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoading(false);
+    }
+  }, [])
+
   useEffect(() => {
     fetchSongs();
     fetchAlbums();
@@ -139,7 +163,10 @@ export const SongProvider: React.FC<SongProviderProps> = ({ children }) => {
         fetchSingleSong,
         song,
         nextSong,
-        prevSong
+        prevSong,
+        albumSong,
+        albumData,
+        fetchAlbumSongs
       }}
     >
       {children}
