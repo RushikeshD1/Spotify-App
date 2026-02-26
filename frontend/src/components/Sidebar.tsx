@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import PlayListCard from "./PlayListCard";
+import { useUserData } from "../context/userContext";
 
 
 
 const Sidebar = () => {
 
-
+  const {user} = useUserData()
   const navigate = useNavigate();
 
   return (
@@ -43,7 +44,11 @@ const Sidebar = () => {
           <button className="px-4 py-1.5 bg-white text-black text-[15px] rounded-full mt-4">
             Browse PodCasts
           </button>
+          
         </div>
+        {user && user.role === "admin" && <button onClick={() => navigate("/admin/dashboard")} className="ml-4 px-4 py-1.5 bg-white text-black text-[15px] rounded-full mt-4 cursor-pointer">
+            Admin DashBoard
+          </button>}
       </div>
     </div>
   )

@@ -44,7 +44,9 @@ interface SongContextType {
   albumData: Album | null;
   fetchAlbumSongs : (
     id: string
-  ) => Promise<void>
+  ) => Promise<void>;
+  fetchSongs: () => Promise<void>;
+  fetchAlbums: () => Promise<void>
 }
 
 const SongContext = createContext<SongContextType | undefined>(undefined);
@@ -166,7 +168,9 @@ export const SongProvider: React.FC<SongProviderProps> = ({ children }) => {
         prevSong,
         albumSong,
         albumData,
-        fetchAlbumSongs
+        fetchAlbumSongs,
+        fetchAlbums,
+        fetchSongs
       }}
     >
       {children}

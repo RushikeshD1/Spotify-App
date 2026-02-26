@@ -27,6 +27,7 @@ const Album = () => {
   }, [params.id]);
 
   return (
+    <div>
     <Layout>
       {albumData && (
         <>
@@ -91,6 +92,7 @@ const Album = () => {
         </>
       )}
     </Layout>
+    </div>
   );
 };
 
