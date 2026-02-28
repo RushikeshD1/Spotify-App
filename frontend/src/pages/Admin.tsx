@@ -6,7 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 
-const server = "http://localhost:3000";
+const server = "http://13.53.174.55:3000";
 
 const Admin = () => {
   const { user } = useUserData();
@@ -278,7 +278,6 @@ const Admin = () => {
         <h3 className="text-xl font-semibold mb-4">Added Albums</h3>
         <div className="flex justify-center md:justify-start gap-2 flex-wrap">
             {albums?.map((e:any, i:number) =>{
-                console.log("albums", e)
                 return <div className="bg-[#181818] p-4 rounded-lg shadow-md" key={i}>
                     <img className="mr-1 w-52 h-52" src={e.thumbnail}/>
                     <h4 className="text-lg font-bold">{e.title.slice(0, 30)}...</h4>

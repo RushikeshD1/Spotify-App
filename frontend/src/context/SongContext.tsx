@@ -9,7 +9,7 @@ import {
 } from "react";
 import Album from "../pages/Album";
 
-const server = "http://localhost:8000";
+const server = "http://13.53.174.55:8000";
 
 export interface Song {
   id: string;
