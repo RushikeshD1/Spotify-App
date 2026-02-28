@@ -10,8 +10,6 @@ It allows users to explore albums and songs, manage playlists, and enjoy a smoot
 - **Live Project:** [SoundNode Live](http://13.53.174.55:7000) 
 - **GitHub Repository:** [SoundNode GitHub](https://github.com/RushikeshD1/Spotify-App)
 
-> Replace the above links with your actual deployment and repository URLs.
-
 ---
 
 ## 🚀 Tech Stack
