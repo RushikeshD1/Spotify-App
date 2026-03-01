@@ -7,7 +7,7 @@ It allows users to explore albums and songs, manage playlists, and enjoy a smoot
 
 ## 🔗 Project Link
 
-- **Live Project:** [SoundNode Live](http://13.53.174.55:7000) 
+- **Live Project:** [SoundNode Live](http://13.60.51.13:7000) 
 - **GitHub Repository:** [SoundNode GitHub](https://github.com/RushikeshD1/Spotify-App)
 
 ---
